@@ -1,0 +1,83 @@
+$border-grey: rgb(204,214,221);
+$btn-blue: rgb(29,161,242);
+$btn-hover-light: rgb(232,245,254);
+$btn-hover-dark: rgb(26,145,218);
+$border-bottom-grey: rgb(101, 119, 134);
+$background-hover-light: rgb(245,248,250);
+html, body{
+  height: 100%;
+  font-family: Helvetica;
+}
+.main-nav {
+  border-bottom: 1px solid $border-grey;
+}
+#login-btn{
+  margin-right: 5px;
+  color: $btn-blue;
+  font-weight: 700;
+  padding: 3px 23px;
+  border: 1px solid $btn-blue;
+  border-radius: 50px;
+}
+#login-btn:hover{
+  background-color:$btn-hover-light;
+}
+#register-btn{
+  color: white;
+  font-weight: 700;
+  padding: 3px 21px;
+  background-color: $btn-blue;
+  border: 1px solid $btn-blue;
+  border-radius: 50px;
+}
+#register-btn:hover{
+  background-color:$btn-hover-dark;
+}
+.man-form{
+  max-width: 650px;
+}
+.man-input-group{
+  display: block;
+  background-color: $background-hover-light;
+  border-bottom: 2px solid $btn-blue;
+  margin: 50px 0px;
+}
+.man-label{
+  color: $btn-blue;
+  padding: 5px 0px 0px 7px;
+  display: block;
+}
+.man-input{
+  padding-left: 7px;
+  border: none;
+  background-color: $background-hover-light;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 100;
+  font-family: arial;
+}
+.submit-btn{
+  width: 100%;
+  color: white;
+  font-weight: 700;
+  padding: 13px 21px;
+  background-color: $btn-blue;
+  border: 1px solid $btn-blue;
+  border-radius: 50px;
+}
+.submit-btn:hover{
+  color: white;
+  background-color:$btn-hover-dark;
+}
+#profile-img{
+  border-radius: 50%;
+  margin-right: 10px;
+}
+#profile-btn{
+  border-radius: 50px;
+  font-weight: bold;
+}
+#profile-btn:hover{
+  background-color: $btn-hover-light;
+  color: $btn-blue;
+}

@@ -1,0 +1,93 @@
+html, body {
+  height: 100%;
+  font-family: Helvetica;
+}
+
+.main-nav {
+  border-bottom: 1px solid #ccd6dd;
+}
+
+#login-btn {
+  margin-right: 5px;
+  color: #1da1f2;
+  font-weight: 700;
+  padding: 3px 23px;
+  border: 1px solid #1da1f2;
+  border-radius: 50px;
+}
+
+#login-btn:hover {
+  background-color: #e8f5fe;
+}
+
+#register-btn {
+  color: white;
+  font-weight: 700;
+  padding: 3px 21px;
+  background-color: #1da1f2;
+  border: 1px solid #1da1f2;
+  border-radius: 50px;
+}
+
+#register-btn:hover {
+  background-color: #1a91da;
+}
+
+.man-form {
+  max-width: 650px;
+}
+
+.man-input-group {
+  display: block;
+  background-color: #f5f8fa;
+  border-bottom: 2px solid #1da1f2;
+  margin: 50px 0px;
+}
+
+.man-label {
+  color: #1da1f2;
+  padding: 5px 0px 0px 7px;
+  display: block;
+}
+
+.man-input {
+  padding-left: 7px;
+  border: none;
+  background-color: #f5f8fa;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 100;
+  font-family: arial;
+}
+
+.submit-btn {
+  width: 100%;
+  color: white;
+  font-weight: 700;
+  padding: 13px 21px;
+  background-color: #1da1f2;
+  border: 1px solid #1da1f2;
+  border-radius: 50px;
+}
+
+.submit-btn:hover {
+  color: white;
+  background-color: #1a91da;
+}
+
+#profile-img {
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+#profile-btn {
+  border-radius: 50px;
+  font-weight: bold;
+}
+
+#profile-btn:hover {
+  background-color: #e8f5fe;
+  color: #1da1f2;
+}
+
+/*# sourceMappingURL=style.css.map */
