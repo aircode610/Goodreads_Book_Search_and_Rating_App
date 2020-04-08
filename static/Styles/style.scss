@@ -56,6 +56,9 @@ html, body{
   font-weight: 100;
   font-family: arial;
 }
+.man-input:focus{
+  outline: none;
+}
 .submit-btn{
   width: 100%;
   color: white;

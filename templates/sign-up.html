@@ -19,22 +19,26 @@
       <a class="" href="{{url_for('index')}}">
       <img src="{{url_for('static', filename='Images/book.png')}}" class="mx-auto d-block mt-3" width="60" height="60">
       </a>
-      <form class="m-5">
+      <form class="m-5" action="{{url_for('submit')}}" method="post">
         <h4 style="font-weight: bold;" class="mb-3 d-block">Create your account</h4>
         <div class="form-group man-input-group">
-          <label for="email" class="m-0 man-label">Email address</label>
-          <input type="" class="man-input d-block" id="" placeholder="">
-        </div>
-        <div class="form-group man-input-group">
           <label for="username" class="m-0 man-label">Username</label>
-          <input type="username" class="man-input d-block" id="" placeholder="">
+          <input type="" class="man-input d-block" name="username" id="username" placeholder="">
         </div>
         <div class="form-group man-input-group">
           <label for="password" class="m-0 man-label">Password</label>
-          <input type="password" class="man-input d-block" id="" placeholder="">
+          <input type="password" class="man-input d-block" id="" name="password" placeholder="">
         </div>
-        <a href="{{url_for('submit')}}"><button class="btn submit-btn" type="button">Sign up</button></a>
+        <div class="form-group man-input-group">
+          <label for="email" class="m-0 man-label">Confirm password</label>
+          <input type="password" class="man-input d-block" name="confirm" id="" placeholder="">
+        </div>
+        <button class="btn submit-btn" type="submit">Sign up</button>
       </form>
+      <div class="m-5">
+        Already have an account?
+        <a href="{{url_for('login')}}">Log in</a>
+      </div>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -19,18 +19,22 @@
       <a class="" href="{{url_for('index')}}">
       <img src="{{url_for('static', filename='Images/book.png')}}" class="mx-auto d-block mt-3" width="60" height="60">
       </a>
-      <form class="m-5">
+      <form class="m-5" action="{{url_for('login_check')}}" method="post">
         <h4 style="font-weight: bold;" class="text-center">Log in to Bukrev</h4>
         <div class="form-group man-input-group">
           <label for="username" class="m-0 man-label">Username</label>
-          <input type="username" class="man-input d-block" id="" placeholder="">
+          <input type="" class="man-input d-block" name="username" id="" placeholder="">
         </div>
         <div class="form-group man-input-group">
           <label for="password" class="m-0 man-label">Password</label>
-          <input type="password" class="man-input d-block" id="" placeholder="">
+          <input type="password" class="man-input d-block" name="password" id="" placeholder="">
         </div>
-        <a href="{{url_for('login_check')}}"><button class="btn submit-btn" type="button">Log in</button></a>
+        <button class="btn submit-btn" type="submit">Log in</button>
       </form>
+      <div class="m-5">
+        Don't have an account?
+        <a href="{{url_for('signup')}}">Sign up</a>
+      </div>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
