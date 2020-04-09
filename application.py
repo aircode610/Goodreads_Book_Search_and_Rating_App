@@ -35,7 +35,10 @@ def login():
     return render_template("log-in.html")
 @app.route("/home")
 def home():
-    return render_template("home.html")
+    if session.get("user_id") is None:
+        return render_template("index.html")
+    else:
+        return render_template("home.html", result="home")
 @app.route("/submit", methods=["POST"])
 def submit():
     username = request.form.get("username")
@@ -69,3 +72,19 @@ def login_check():
 def log_out():
     session["user_id"] = None
     return redirect(url_for("index"))
+@app.route("/search", methods=["POST"])
+def search():
+    str = request.form.get("book").lower()
+    results = []
+    all_books = db.execute("SELECT isbn, title, author FROM books").fetchall()
+    for isbn, title, author in all_books:
+        if str in isbn.lower() or str in title.lower() or str in author.lower():
+            results.append(title)
+    db.commit()
+    return render_template("home.html", result=results)
+@app.route("/book")
+def book(book_title):
+    book_title = book_title.lower()
+    info = db.execute("SELECT isbn, title, author FROM books WHERE title = :title", {"title": book_title}).fetchone()
+    db.commit()
+    return render_template("book.html", info=info)

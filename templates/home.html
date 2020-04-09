@@ -12,6 +12,8 @@
 
     <link rel="icon" href="{{url_for('static', filename='Images/book.png')}}">
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
     <title>Bukrev</title>
   </head>
   <body>
@@ -30,6 +32,27 @@
         </div>
     </div>
     </nav>
+    <div class="container">
+      <div class="row">
+        <form class="input-group mb-3 col-10 col-sm-11 col-md-9 col-lg-9 col-xl-9 mx-auto mt-5" action="{{url_for('search')}}" method="post">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon1"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </div>
+          <input type="text" name="book" class="form-control" placeholder="Search in the books..." aria-label="Example text with button addon" aria-describedby="button-addon1">
+        </form>
+      </div>
+      <div class="">
+        <ul>
+          {% if result != "home" %}
+            {% for r in result %}
+              <li><a href="{{url_for('book', book_title = r)}}">{{ r }}</a></li>
+            {% else %}
+              <h1>No results</h1>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
