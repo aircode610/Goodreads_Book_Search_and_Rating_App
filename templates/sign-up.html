@@ -20,6 +20,11 @@
       <img src="{{url_for('static', filename='Images/book.png')}}" class="mx-auto d-block mt-3" width="60" height="60">
       </a>
       <form class="m-5" action="{{url_for('submit')}}" method="post">
+        {% if message != "" %}
+          <div class="alert alert-danger" role="alert">
+            {{message}}
+          </div>
+        {% endif %}
         <h4 style="font-weight: bold;" class="mb-3 d-block">Create your account</h4>
         <div class="form-group man-input-group">
           <label for="username" class="m-0 man-label">Username</label>

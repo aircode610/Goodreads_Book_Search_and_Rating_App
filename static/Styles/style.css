@@ -4,6 +4,7 @@ html, body {
 }
 
 .main-nav {
+  height: 7.5%;
   border-bottom: 1px solid #ccd6dd;
 }
 
@@ -60,6 +61,10 @@ html, body {
   font-family: arial;
 }
 
+.man-input:focus {
+  outline: none;
+}
+
 .submit-btn {
   width: 100%;
   color: white;
@@ -88,6 +93,41 @@ html, body {
 #profile-btn:hover {
   background-color: #e8f5fe;
   color: #1da1f2;
+}
+
+.main-body {
+  height: 92.5%;
+  color: white;
+  background-color: #3399cc;
+  position: relative;
+  width: 100%;
+}
+
+.review {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+@media screen and (min-width: 800px) and (min-width: 1000px) {
+  .review {
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
+  }
+}
+@media screen and (max-width: 800px) {
+  .review {
+    display: block;
+    margin-left: 15px;
+    margin-right: auto;
+  }
+}
+.sign-up-main {
+  position: absolute;
+  top: 50%;
+  transform: translate(125%, -50%);
 }
 
 /*# sourceMappingURL=style.css.map */

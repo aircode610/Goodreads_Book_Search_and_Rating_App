@@ -29,10 +29,10 @@ def index():
         return redirect(url_for("home"))
 @app.route("/sign-up")
 def signup():
-    return render_template("sign-up.html")
+    return render_template("sign-up.html", message="")
 @app.route("/log-in")
 def login():
-    return render_template("log-in.html")
+    return render_template("log-in.html", message="")
 @app.route("/home")
 def home():
     if session.get("user_id") is None:
@@ -45,9 +45,11 @@ def submit():
     password = request.form.get("password")
     confirm = request.form.get("confirm")
     all_users = db.execute("SELECT username, password FROM users").fetchall()
+    if username == "" or password == "" or confirm == "":
+        return render_template("sign-up.html", message="You need to fill all of the inputs!")
     for user, pwd in all_users:
         if user == username:
-            return render_template("sign-up-wrong.html", message="This username has already been taken!")
+            return render_template("sign-up.html", message="This username has already been taken!")
     if password == confirm:
         db.execute("INSERT INTO users (username, password) VALUES (:username, :password)",{"username": username, "password": password})
         id = db.execute("SELECT id FROM users WHERE username = :username", {"username" : username}).fetchone()
@@ -55,19 +57,21 @@ def submit():
         db.commit()
         return redirect(url_for("home"))
     else:
-        return render_template("sign-up-wrong.html", message="The passwords you typed in do not match!")
+        return render_template("sign-up.html", message="The passwords you typed in do not match!")
 @app.route("/login-check", methods=["POST"])
 def login_check():
     username = request.form.get("username")
     password = request.form.get("password")
     all_users = db.execute("SELECT username, password FROM users").fetchall()
+    if username == "" or password == "":
+        return render_template("log-in.html", message="You need to fill all of the inputs!")
     for user, pwd in all_users:
         if user == username and pwd == password:
             id = db.execute("SELECT id FROM users WHERE username = :username", {"username" : username}).fetchone()
             session["user_id"] = id
             db.commit()
             return redirect(url_for("home"))
-    return render_template("login-wrong.html")
+    return render_template("log-in.html", message="The username or password that you entered is invalid!")
 @app.route("/log-out")
 def log_out():
     session["user_id"] = None
