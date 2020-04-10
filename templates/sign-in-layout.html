@@ -12,36 +12,23 @@
 
     <link rel="icon" href="{{url_for('static', filename='Images/book.png')}}">
 
-    <title>Sign up</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
     <div class="man-form mx-auto">
       <a class="" href="{{url_for('index')}}">
       <img src="{{url_for('static', filename='Images/book.png')}}" class="mx-auto d-block mt-3" width="60" height="60">
       </a>
-      <form class="m-5" action="{{url_for('submit')}}" method="post">
-        <div class="alert alert-danger" role="alert">
-          {{message}}
-        </div>
-        <h4 style="font-weight: bold;" class="mb-3 d-block">Create your account</h4>
-        <div class="form-group man-input-group">
-          <label for="username" class="m-0 man-label">Username</label>
-          <input type="" class="man-input d-block" name="username" id="username" placeholder="">
-        </div>
-        <div class="form-group man-input-group">
-          <label for="password" class="m-0 man-label">Password</label>
-          <input type="password" class="man-input d-block" id="" name="password" placeholder="">
-        </div>
-        <div class="form-group man-input-group">
-          <label for="email" class="m-0 man-label">Confirm password</label>
-          <input type="password" class="man-input d-block" name="confirm" id="" placeholder="">
-        </div>
-        <button class="btn submit-btn" type="submit">Sign up</button>
-      </form>
-      <div class="m-5">
-        Already have an account?
-        <a href="{{url_for('login')}}">Log in</a>
-      </div>
+      <form class="m-5" action="{{url_for('login_check')}}" method="post">
+        {% if message != "" %}
+          <div class="alert alert-danger" role="alert">
+            {{message}}
+          </div>
+        {% endif %}
+        {% block head %}{% endblock %}
+        {% block main_body %}{% endblock %}
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

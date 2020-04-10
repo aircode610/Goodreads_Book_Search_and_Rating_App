@@ -4,11 +4,13 @@ $btn-hover-light: rgb(232,245,254);
 $btn-hover-dark: rgb(26,145,218);
 $border-bottom-grey: rgb(101, 119, 134);
 $background-hover-light: rgb(245,248,250);
+$background-review: rgb(51,153,204);
 html, body{
   height: 100%;
   font-family: Helvetica;
 }
 .main-nav {
+  height: 7.5%;
   border-bottom: 1px solid $border-grey;
 }
 #login-btn{
@@ -83,4 +85,88 @@ html, body{
 #profile-btn:hover{
   background-color: $btn-hover-light;
   color: $btn-blue;
+}
+.main-body{
+  height: 92.5%;
+  color: white;
+  background-color:$background-review;
+  position: relative;
+  width: 100%;
+}
+.review{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+@media screen and (min-width: 800px) and (min-width: 1000px) {
+    .review {
+      position: absolute;
+      top: 50%;
+      transform: translate(0%, -50%);
+    }
+}
+@media screen and (max-width: 800px) {
+    .review {
+      display: block;
+      margin-left: 15px;
+      margin-right: auto;
+    }
+}
+.sign-up-main{
+  position: absolute;
+  top: 50%;
+  transform: translate(125%, -50%);
+}
+.input-icons i {
+    position: absolute;
+    right: 0;
+}
+.input-icons {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.icon {
+    padding: 10px;
+    margin-right: 3px;
+    min-width: 50px;
+    color: $btn-blue;
+}
+.icon:hover{
+  cursor: pointer;
+}
+.input-field {
+    width: 100%;
+    padding: 15px;
+}
+.books{
+  height: 30%;
+}
+.book-result{
+  position: relative;
+}
+.book-title{
+  position: absolute;
+  top: 0;
+  font-weight: 600;
+}
+.book-author{
+  position: absolute;
+  top: 23%;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.view-btn{
+  position: absolute;
+  top: 60%;
+  background-color: $btn-blue;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 3px 10px;
+}
+.view-btn:hover{
+  background-color: $btn-hover-dark;
+  color: white;
 }
