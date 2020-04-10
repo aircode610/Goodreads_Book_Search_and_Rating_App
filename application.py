@@ -82,9 +82,9 @@ def search():
             results.append(title)
     db.commit()
     return render_template("home.html", result=results)
-@app.route("/book")
+@app.route("/book/<book_title>")
 def book(book_title):
-    book_title = book_title.lower()
-    info = db.execute("SELECT isbn, title, author FROM books WHERE title = :title", {"title": book_title}).fetchone()
+    book_title = book_title
+    info = db.execute("SELECT isbn, title, author, year FROM books WHERE title = :title", {"title": book_title}).fetchone()
     db.commit()
     return render_template("book.html", info=info)

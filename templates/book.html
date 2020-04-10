@@ -33,23 +33,11 @@
     </div>
     </nav>
     <div class="container">
-      <div class="row">
-        <form class="input-group mb-3 col-10 col-sm-11 col-md-9 col-lg-9 col-xl-9 mx-auto mt-5" action="{{url_for('search')}}" method="post">
-          <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary" type="submit" id="button-addon1"><i class="fa fa-search" aria-hidden="true"></i></button>
-          </div>
-          <input type="text" name="book" class="form-control" placeholder="Search in the books..." aria-label="Example text with button addon" aria-describedby="button-addon1">
-        </form>
-      </div>
       <div class="">
         <ul>
-          {% if result != "home" %}
-            {% for r in result %}
-              <li><a href="{{url_for('book', book_title=r)}}">{{ r }}</a></li>
-            {% else %}
-              <h1>No results</h1>
-            {% endfor %}
-          {% endif %}
+          {% for i in info %}
+            <li>{{ i }}</li>
+          {% endfor %}
         </ul>
       </div>
     </div>
