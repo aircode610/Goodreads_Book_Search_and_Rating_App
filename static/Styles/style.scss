@@ -118,3 +118,55 @@ html, body{
   top: 50%;
   transform: translate(125%, -50%);
 }
+.input-icons i {
+    position: absolute;
+    right: 0;
+}
+.input-icons {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.icon {
+    padding: 10px;
+    margin-right: 3px;
+    min-width: 50px;
+    color: $btn-blue;
+}
+.icon:hover{
+  cursor: pointer;
+}
+.input-field {
+    width: 100%;
+    padding: 15px;
+}
+.books{
+  height: 30%;
+}
+.book-result{
+  position: relative;
+}
+.book-title{
+  position: absolute;
+  top: 0;
+  font-weight: 600;
+}
+.book-author{
+  position: absolute;
+  top: 23%;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.view-btn{
+  position: absolute;
+  top: 60%;
+  background-color: $btn-blue;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 3px 10px;
+}
+.view-btn:hover{
+  background-color: $btn-hover-dark;
+  color: white;
+}

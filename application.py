@@ -76,14 +76,14 @@ def login_check():
 def log_out():
     session["user_id"] = None
     return redirect(url_for("index"))
-@app.route("/search", methods=["POST"])
+@app.route("/search", methods=["GET"])
 def search():
-    str = request.form.get("book").lower()
+    string = str(request.args.get("keyword")).lower()
     results = []
     all_books = db.execute("SELECT isbn, title, author FROM books").fetchall()
     for isbn, title, author in all_books:
-        if str in isbn.lower() or str in title.lower() or str in author.lower():
-            results.append(title)
+        if string in isbn.lower() or string in title.lower() or string in author.lower():
+            results.append([isbn, title, author])
     db.commit()
     return render_template("home.html", result=results)
 @app.route("/book/<book_title>")

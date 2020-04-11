@@ -1,62 +1,44 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% extends "layout.html" %}
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{% block title %}
+  Bukrev
+{% endblock %}
 
-    <link rel="stylesheet" href="{{url_for('static', filename='Styles/style.css')}}">
+{% block dropdown %}
+  <div class="dropdown">
+    <button type="button" name="button" class="btn" id="profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <img src="{{url_for('static', filename='Images/profile.png')}}" width="25" height="25" id="profile-img">
+      Profile
+    </button>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-btn">
+      <a class="dropdown-item" href="{{url_for('log_out')}}">Log out</a>
+    </div>
+  </div>
+{% endblock %}
 
-    <link rel="icon" href="{{url_for('static', filename='Images/book.png')}}">
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-    <title>Bukrev</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-light main-nav py-1">
-      <a class="navbar-brand" href="{{url_for('index')}}">
-        <img src="{{url_for('static', filename='Images/book.png')}}" width="40" height="40" class="d-inline-block align-middle" alt="">
-        <span class="align-middle">Bukrev</span>
-      </a>
-      <div class="dropdown">
-        <button type="button" name="button" class="btn" id="profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src="{{url_for('static', filename='Images/profile.png')}}" width="25" height="25" id="profile-img">
-          Profile
-        </button>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-btn">
-          <a class="dropdown-item" href="{{url_for('log_out')}}">Log out</a>
+{% block main_body %}
+  <div class="container">
+    <div class="row">
+      <form class="input-group mb-3 col-11 mx-auto mt-4" id="search" action="{{url_for('search')}}" method="get">
+        <div class="form-group input-icons">
+          <a onclick="document.getElementById('search').submit(); return false;"><i class="fas fa-search icon"></i></a>
+          <input type="text" class="form-control input-field" name="keyword" aria-describedby="" placeholder="Search books by title, author or isbn ..." required>
         </div>
+      </form>
     </div>
-    </nav>
-    <div class="container">
-      <div class="row">
-        <form class="input-group mb-3 col-10 col-sm-11 col-md-9 col-lg-9 col-xl-9 mx-auto mt-5" action="{{url_for('search')}}" method="post">
-          <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary" type="submit" id="button-addon1"><i class="fa fa-search" aria-hidden="true"></i></button>
+    <div class="books container">
+      {% if result != "home" %}
+        {% for r in result %}
+          <div class="book-result mx-auto my-5 pl-lg-4 pl-sm-2">
+            <img src="{{url_for('static', filename='Images/book-ex.png')}}" class="mr-3" width="70" height="85" alt="">
+            <span class="book-title">{{ r[1] }}</span>
+            <span class="book-author">by {{ r[2] }}</span>
+            <button type="button" name="button" class="btn view-btn">View book</button>
           </div>
-          <input type="text" name="book" class="form-control" placeholder="Search in the books..." aria-label="Example text with button addon" aria-describedby="button-addon1">
-        </form>
-      </div>
-      <div class="">
-        <ul>
-          {% if result != "home" %}
-            {% for r in result %}
-              <li><a href="{{url_for('book', book_title=r)}}">{{ r }}</a></li>
-            {% else %}
-              <h1>No results</h1>
-            {% endfor %}
-          {% endif %}
-        </ul>
-      </div>
+        {% else %}
+          <h2>No results</h2>
+        {% endfor %}
+      {% endif %}
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
-</html>
+  </div>
+{% endblock %}
