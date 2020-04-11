@@ -33,10 +33,10 @@
             <img src="{{url_for('static', filename='Images/book-ex.png')}}" class="mr-3" width="70" height="85" alt="">
             <span class="book-title">{{ r[1] }}</span>
             <span class="book-author">by {{ r[2] }}</span>
-            <button type="button" name="button" class="btn view-btn">View book</button>
+            <a href="{{url_for('book')}}"><button type="button" name="button" class="btn view-btn">View book</button></a>
           </div>
         {% else %}
-          <h2>No results</h2>
+          <h3 class="mx-auto my-5 pl-lg-4 pl-sm-2">No results</h3>
         {% endfor %}
       {% endif %}
     </div>
