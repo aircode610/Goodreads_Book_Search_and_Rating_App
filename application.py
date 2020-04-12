@@ -2,7 +2,7 @@ import os
 import requests
 import math
 
-from flask import Flask, session, render_template, request, redirect, url_for
+from flask import Flask, session, render_template, request, redirect, url_for, jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -92,15 +92,83 @@ def search():
 def book(book_title):
     info = []
     book_title = book_title
-    book_info = db.execute("SELECT isbn, title, author, year FROM books WHERE title = :title", {"title": book_title}).fetchone()
+    book_info = db.execute("SELECT id, isbn, title, author, year FROM books WHERE title = :title", {"title": book_title}).fetchone()
+    isbn = db.execute("SELECT isbn FROM books WHERE title = :title", {"title": book_title}).fetchone()
+    count = 0
+    id = 0
     for i in book_info:
+        if count == 0:
+            id = int(i)
+            count += 1
+            continue
         info.append(i)
-    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "GhLOXmdJzO0kf2gDtsXg", "isbns": info[0]})
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "GhLOXmdJzO0kf2gDtsXg", "isbns": isbn})
     ai = res.json()["books"][0]
     rating = ai["average_rating"]
     rating_count = ai["work_ratings_count"]
     info.append(float(rating))
     info.append(rating_count)
     info.append(math.trunc(float(rating)))
+    review_info = []
+    reviews = db.execute("SELECT review_text, rating, username FROM reviews JOIN users ON reviews.user_id = users.id WHERE reviews.book_id = :id", {"id": id}).fetchall()
+    for elem in reviews:
+        review_info.append(elem)
     db.commit()
-    return render_template("book.html", info=info)
+    return render_template("book.html", info=info, review=review_info)
+@app.route("/api/<isbn>")
+def books_api(isbn):
+    info = []
+    book_info = db.execute("SELECT isbn, title, author, year FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
+    if book_info == None:
+        return jsonify({"error":"Invalid isbn"}), 404
+    for i in book_info:
+        info.append(i)
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "GhLOXmdJzO0kf2gDtsXg", "isbns": info[0]})
+    ai = res.json()["books"][0]
+    return jsonify({
+        "title": info[1],
+        "author": info[2],
+        "year": info[3],
+        "isbn": info[0],
+        "review_count": int(ai["work_ratings_count"]),
+        "average_score": float(ai["average_rating"])
+    })
+@app.route("/review/<title>")
+def review_page(title):
+    author = db.execute("SELECT author FROM books WHERE title = :title", {"title" : title}).fetchone()[0]
+    return render_template("review.html", t=title, a=author, message="")
+@app.route("/sending/<t>", methods=["GET"])
+def review(t):
+    rating = request.args.get("rate")
+    review = str(request.args.get("review"))
+    user_id = session["user_id"][0]
+    book_id = db.execute("SELECT id FROM books WHERE title = :title", {"title" : t}).fetchone()[0]
+    check = db.execute("SELECT * FROM reviews JOIN users ON reviews.user_id = users.id WHERE user_id = :user_id AND book_id = :book_id", {"user_id" : user_id, "book_id" : book_id}).fetchone()
+    info = []
+    book_info = db.execute("SELECT id, isbn, title, author, year FROM books WHERE title = :title", {"title": t}).fetchone()
+    count = 0
+    id = 0
+    isbn = db.execute("SELECT isbn FROM books WHERE title = :title", {"title": t}).fetchone()
+    for i in book_info:
+        if count == 0:
+            id = int(i)
+            count += 1
+            continue
+        info.append(i)
+    if check == None:
+        db.execute("INSERT INTO reviews (user_id, book_id, review_text, rating) VALUES (:user_id, :book_id, :review_text, :rating)",{"user_id": user_id, "book_id": book_id, "review_text": review, "rating": rating})
+    else:
+        return render_template("review.html",t=t, a=info[2], message="You've posted another review")
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "GhLOXmdJzO0kf2gDtsXg", "isbns": isbn})
+    ai = res.json()["books"][0]
+    rating = ai["average_rating"]
+    rating_count = ai["work_ratings_count"]
+    info.append(float(rating))
+    info.append(rating_count)
+    info.append(math.trunc(float(rating)))
+    review_info = []
+    reviews = db.execute("SELECT review_text, rating, username FROM reviews JOIN users ON reviews.user_id = users.id WHERE reviews.book_id = :id", {"id": id}).fetchall()
+    for elem in reviews:
+        review_info.append(elem)
+    db.commit()
+    return render_template("book.html", info=info, review=review_info)
