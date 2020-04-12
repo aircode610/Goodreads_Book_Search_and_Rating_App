@@ -21,7 +21,7 @@
       <a class="" href="{{url_for('index')}}">
       <img src="{{url_for('static', filename='Images/book.png')}}" class="mx-auto d-block mt-3" width="60" height="60">
       </a>
-      <form class="m-5" action="{{url_for('login_check')}}" method="post">
+      {% block form %}{% endblock %}
         {% if message != "" %}
           <div class="alert alert-danger" role="alert">
             {{message}}

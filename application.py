@@ -1,5 +1,6 @@
 import os
 import requests
+import math
 
 from flask import Flask, session, render_template, request, redirect, url_for
 from flask_session import Session
@@ -89,7 +90,17 @@ def search():
     return render_template("home.html", result=results)
 @app.route("/book/<book_title>")
 def book(book_title):
+    info = []
     book_title = book_title
-    info = db.execute("SELECT isbn, title, author, year FROM books WHERE title = :title", {"title": book_title}).fetchone()
+    book_info = db.execute("SELECT isbn, title, author, year FROM books WHERE title = :title", {"title": book_title}).fetchone()
+    for i in book_info:
+        info.append(i)
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "GhLOXmdJzO0kf2gDtsXg", "isbns": info[0]})
+    ai = res.json()["books"][0]
+    rating = ai["average_rating"]
+    rating_count = ai["work_ratings_count"]
+    info.append(float(rating))
+    info.append(rating_count)
+    info.append(math.trunc(float(rating)))
     db.commit()
     return render_template("book.html", info=info)
