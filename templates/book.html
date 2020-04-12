@@ -36,5 +36,24 @@
       </span>
     </div>
   </div>
+  <div class="container mt-5">
+    <a href="{{url_for('review_page', title=info[1])}}"><button type="button" name="button" class="btn review-btn ml-3">Write a review</button></a>
+  </div>
+  <div class="container mt-5">
+    {% for elem in review %}
+      <div class="user_review">
+        <img src="{{url_for('static', filename='Images/profile.png')}}" width="40" height="40" id="profile-img">
+        <span class="user_name">{{ elem[2] }}</span> rated it
+        {% for i in range(elem[1]) %}
+          <span class="fa fa-star checked"></span>
+        {% endfor %}
+        {% for i in range(5 - elem[1]) %}
+          <span class="fa fa-star"></span>
+        {% endfor %}
+        <br>
+        <br>
+        <pre class="m-0 review_text">{{elem[0]}}</pre>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
-<!doctype html>

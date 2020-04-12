@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Review
+{% endblock %}
+
+{% block dropdown %}
+  <div class="dropdown">
+    <button type="button" name="button" class="btn" id="profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <img src="{{url_for('static', filename='Images/profile.png')}}" width="25" height="25" id="profile-img">
+      Profile
+    </button>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-btn">
+      <a class="dropdown-item" href="{{url_for('log_out')}}">Log out</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block main_body %}
+  <div class="container mt-4">
+    <h1 class="review-head ml-2">Review</h1>
+    <div class="book-result mt-5 pb-4">
+      <img src="{{url_for('static', filename='Images/book-ex.png')}}" class="mr-3" width="80" height="100" alt="">
+      <span class="book-title">{{t}}</span>
+      <span class="book-author">by {{a}}</span>
+    </div>
+    <div class="mt-3">
+      <form class="d-inline" action="{{url_for('review', t=t)}}" method="get">
+        {% if message != "" %}
+          <div class="alert alert-danger" role="alert">
+            {{message}}
+          </div>
+        {% endif %}        
+        <div class="form-group">
+          <label for="review p-3">What did you think?</label>
+          <textarea class="form-control" id="review" name="review" rows="8" placeholder="Enter your review here..." required></textarea>
+        </div>
+        <div class="rate">
+          <input type="radio" id="star5" name="rate" value="5" required/>
+          <label for="star5" title="text">5 stars</label>
+          <input type="radio" id="star4" name="rate" value="4" required/>
+          <label for="star4" title="text">4 stars</label>
+          <input type="radio" id="star3" name="rate" value="3" required/>
+          <label for="star3" title="text">3 stars</label>
+          <input type="radio" id="star2" name="rate" value="2" required/>
+          <label for="star2" title="text">2 stars</label>
+          <input type="radio" id="star1" name="rate" value="1" required/>
+          <label for="star1" title="text">1 star</label>
+        </div>
+        <br>
+        <br>
+        <div class="mt-2">
+          <button type="submit" class="btn review-btn">Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
