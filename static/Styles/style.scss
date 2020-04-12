@@ -144,6 +144,7 @@ html, body{
 }
 .book-result{
   position: relative;
+  border-bottom: 1px solid rgb(215,225,232);
 }
 .book-title{
   position: absolute;
@@ -169,4 +170,17 @@ html, body{
 .view-btn:hover{
   background-color: $btn-hover-dark;
   color: white;
+}
+.book-title-main{
+  font-size: 25px;
+  font-weight: 600;
+}
+.book-author-main{
+  font-size: 20px;
+}
+.book-info{
+  top: 0;
+}
+.checked {
+  color: orange;
 }

@@ -8,6 +8,10 @@
   <h4 style="font-weight: bold;" class="mb-3 d-block">Create your account</h4>
 {% endblock %}
 
+{% block form %}
+  <form class="m-5" action="{{url_for('submit')}}" method="post">
+{% endblock %}
+
 {% block main_body %}
   <div class="form-group man-input-group">
     <label for="username" class="m-0 man-label">Username</label>

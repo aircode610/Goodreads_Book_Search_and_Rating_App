@@ -1,50 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Bukrev
+{% endblock %}
+
+{% block dropdown %}
+  <div class="dropdown">
+    <button type="button" name="button" class="btn" id="profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <img src="{{url_for('static', filename='Images/profile.png')}}" width="25" height="25" id="profile-img">
+      Profile
+    </button>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-btn">
+      <a class="dropdown-item" href="{{url_for('log_out')}}">Log out</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block main_body %}
+  <div class="container mt-4 position-relative">
+    <img src="{{url_for('static', filename='Images/book-ex.png')}}" class="mr-3 mt-2" width="170" height="210" alt="">
+    <div class="d-inline-flex flex-column position-absolute book-info">
+      <span class="book-title-main">{{info[1]}}</span>
+      <span class="book-author-main">by {{info[2]}}</span>
+      <span class="mt-2 mt-sm-3">isbn: {{info[0]}}</span>
+      <span>Publish year: {{info[3]}}</span>
+      <span class="mt-3 mt-sm-5">
+        {% for i in range(info[6]) %}
+          <span class="fa fa-star checked"></span>
+        {% endfor %}
+        {% for i in range(5 - info[6]) %}
+          <span class="fa fa-star"></span>
+        {% endfor %}
+        {{info[4]}} from {{info[5]}} ratings
+        by <img src="{{url_for('static', filename='Images/goodreads.png')}}" alt="" width="25" height="25"> goodreads
+      </span>
+    </div>
+  </div>
+{% endblock %}
 <!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="{{url_for('static', filename='Styles/style.css')}}">
-
-    <link rel="icon" href="{{url_for('static', filename='Images/book.png')}}">
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-    <title>Bukrev</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-light main-nav py-1">
-      <a class="navbar-brand" href="{{url_for('index')}}">
-        <img src="{{url_for('static', filename='Images/book.png')}}" width="40" height="40" class="d-inline-block align-middle" alt="">
-        <span class="align-middle">Bukrev</span>
-      </a>
-      <div class="dropdown">
-        <button type="button" name="button" class="btn" id="profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src="{{url_for('static', filename='Images/profile.png')}}" width="25" height="25" id="profile-img">
-          Profile
-        </button>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-btn">
-          <a class="dropdown-item" href="{{url_for('log_out')}}">Log out</a>
-        </div>
-    </div>
-    </nav>
-    <div class="container">
-      <div class="">
-        <ul>
-          {% for i in info %}
-            <li>{{ i }}</li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
-</html>
