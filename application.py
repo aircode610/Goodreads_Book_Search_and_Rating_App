@@ -104,3 +104,21 @@ def book(book_title):
     info.append(math.trunc(float(rating)))
     db.commit()
     return render_template("book.html", info=info)
+@app.route("/api/<isbn>")
+def books_api(isbn):
+    info = []
+    book_info = db.execute("SELECT isbn, title, author, year FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
+    if book_info == None:
+        return jsonify({"error":"Invalid isbn"}), 404
+    for i in book_info:
+        info.append(i)
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "GhLOXmdJzO0kf2gDtsXg", "isbns": info[0]})
+    ai = res.json()["books"][0]
+    return jsonify({
+        "title": info[1],
+        "author": info[2],
+        "year": info[3],
+        "isbn": info[0],
+        "review_count": int(ai["work_ratings_count"]),
+        "average_score": float(ai["average_rating"])
+    })
