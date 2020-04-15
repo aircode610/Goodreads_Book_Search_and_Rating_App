@@ -1,49 +1,88 @@
 {% extends "layout.html" %}
 
+
 {% block title %}
+
   Bukrev
+
 {% endblock %}
 
+
 {% block dropdown %}
+
   <form class="form-inline align-middle d-none d-sm-none d-md-none d-lg-block">
+
     <a href="{{url_for('login')}}"><button class="btn" id="login-btn" type="button">Log in</button></a>
+
   </form>
+
   <div class="dropdown d-block d-sm-block d-md-block d-lg-none">
+
     <a class="btn btn-sm ml-0" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <span class="navbar-toggler-icon"></span>
     </a>
+
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+
       <a class="dropdown-item" href="{{url_for('login')}}">Log in</a>
       <a class="dropdown-item" href="{{url_for('signup')}}">Sign up</a>
+
     </div>
+
   </div>
+
 {% endblock %}
 
+
 {% block main_body %}
+
   <div class="main-body">
+
     <div class="container-fluid">
+
       <div class="col-11 col-sm-11 col-md-11 col-lg-6 p-0 ml-lg-5 review">
+
         <h3 style="">Bukrev helps you to search, rate and review thousands of books and see the best rated books.</h3>
+
         <img src="{{url_for('static', filename='Images/review.png')}}" class="col-12" alt="">
+
       </div>
+
       <div class="col-5 d-none d-sm-none d-md-none d-lg-block ml-5 sign-up-main">
+
         <h2 class="">Create an account in Bukrev</h2>
+
         <form class="mt-5" action="{{url_for('submit')}}" method="post">
+
           <div class="form-group pb-3">
+
             <label for="username">Username</label>
             <input type="text" name="username" placeholder="Enter a username..." class="form-control" aria-describedby="emailHelp" required>
+
           </div>
+
           <div class="form-group pb-3">
+
             <label for="password">Password</label>
             <input type="password" name="password" class="form-control" placeholder="Enter a password..." required>
+
           </div>
+
           <div class="form-group pb-3">
+
             <label for="confirm">Confirm password</label>
             <input type="password" name="confirm" class="form-control" placeholder="Enter your password again..." required>
+            
           </div>
+
           <button type="submit" class="btn btn-primary">Sign up</button>
+
         </form>
+
       </div>
+
     </div>
+
   </div>
+
 {% endblock %}
