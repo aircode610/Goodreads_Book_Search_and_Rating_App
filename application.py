@@ -29,18 +29,26 @@ def index():
         return render_template("index.html")
     else:
         return redirect(url_for("home"))
+
+
 @app.route("/sign-up")
 def signup():
     return render_template("sign-up.html", message="")
+
+
 @app.route("/log-in")
 def login():
     return render_template("log-in.html", message="")
+
+
 @app.route("/home")
 def home():
     if session.get("user_id") is None:
         return render_template("index.html")
     else:
         return render_template("home.html", result="home")
+
+
 @app.route("/submit", methods=["POST"])
 def submit():
     username = request.form.get("username")
@@ -60,6 +68,8 @@ def submit():
         return redirect(url_for("home"))
     else:
         return render_template("sign-up.html", message="The passwords you typed in do not match!")
+
+
 @app.route("/login-check", methods=["POST"])
 def login_check():
     username = request.form.get("username")
@@ -74,6 +84,7 @@ def login_check():
             db.commit()
             return redirect(url_for("home"))
     return render_template("log-in.html", message="The username or password that you entered is invalid!")
+
 @app.route("/log-out")
 def log_out():
     session["user_id"] = None
@@ -88,33 +99,34 @@ def search():
             results.append([isbn, title, author])
     db.commit()
     return render_template("home.html", result=results)
+
+
 @app.route("/book/<book_title>")
 def book(book_title):
-    info = []
+
     book_title = book_title
     book_info = db.execute("SELECT id, isbn, title, author, year FROM books WHERE title = :title", {"title": book_title}).fetchone()
-    isbn = db.execute("SELECT isbn FROM books WHERE title = :title", {"title": book_title}).fetchone()
-    count = 0
-    id = 0
-    for i in book_info:
-        if count == 0:
-            id = int(i)
-            count += 1
-            continue
-        info.append(i)
+    isbn = book_info['isbn']
+
+    # handle error; what if there is no goodreads review?
     res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "GhLOXmdJzO0kf2gDtsXg", "isbns": isbn})
     ai = res.json()["books"][0]
     rating = ai["average_rating"]
     rating_count = ai["work_ratings_count"]
-    info.append(float(rating))
-    info.append(rating_count)
-    info.append(math.trunc(float(rating)))
+    good_reads_rating = {}
+    good_reads_rating['rating'] = float(rating)
+    good_reads_rating['rating_count'] = float(rating_count)
+    good_reads_rating['rating_truncated'] = math.trunc(float(rating))
+
+
     review_info = []
-    reviews = db.execute("SELECT review_text, rating, username FROM reviews JOIN users ON reviews.user_id = users.id WHERE reviews.book_id = :id", {"id": id}).fetchall()
+    reviews = db.execute("SELECT review_text, rating, username FROM reviews JOIN users ON reviews.user_id = users.id WHERE reviews.book_id = :id", {"id": book_info['id']}).fetchall()
     for elem in reviews:
         review_info.append(elem)
-    db.commit()
-    return render_template("book.html", info=info, review=review_info)
+
+    return render_template("book.html", book_info=book_info, good_reads_rating=good_reads_rating, review=review_info)
+
+
 @app.route("/api/<isbn>")
 def books_api(isbn):
     info = []
