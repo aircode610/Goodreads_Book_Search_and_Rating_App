@@ -1,59 +1,98 @@
 {% extends "layout.html" %}
 
+
 {% block title %}
+
   Bukrev
+
 {% endblock %}
+
 
 {% block dropdown %}
+
   <div class="dropdown">
+
     <button type="button" name="button" class="btn" id="profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
       <img src="{{url_for('static', filename='Images/profile.png')}}" width="25" height="25" id="profile-img">
       Profile
+
     </button>
+
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-btn">
+
       <a class="dropdown-item" href="{{url_for('log_out')}}">Log out</a>
+
     </div>
+
   </div>
+
 {% endblock %}
 
+
 {% block main_body %}
+
   <div class="container mt-4 position-relative">
+
     <img src="{{url_for('static', filename='Images/book-ex.png')}}" class="mr-3 mt-2" width="170" height="210" alt="">
+
     <div class="d-inline-flex flex-column position-absolute book-info">
-      <span class="book-title-main">{{info[1]}}</span>
-      <span class="book-author-main">by {{info[2]}}</span>
-      <span class="mt-2 mt-sm-3">isbn: {{info[0]}}</span>
-      <span>Publish year: {{info[3]}}</span>
+
+      <span class="book-title-main">{{ book_info["title"] }}</span>
+      <span class="book-author-main">by {{ book_info["author"] }}</span>
+      <span class="mt-2 mt-sm-3">isbn: {{ book_info["isbn"] }}</span>
+      <span>Publish year: {{ book_info["year"] }}</span>
+
       <span class="mt-3 mt-sm-5">
-        {% for i in range(info[6]) %}
+
+        {% for i in range(rating_info["rating_trunc"]) %}
           <span class="fa fa-star checked"></span>
         {% endfor %}
-        {% for i in range(5 - info[6]) %}
+
+        {% for i in range(5 - rating_info["rating_trunc"]) %}
           <span class="fa fa-star"></span>
         {% endfor %}
-        {{info[4]}} from {{info[5]}} ratings
+
+        {{ rating_info["rating"] }} from {{ rating_info["rating_count"] }} ratings
         by <img src="{{url_for('static', filename='Images/goodreads.png')}}" alt="" width="25" height="25"> goodreads
+
       </span>
+
     </div>
+
   </div>
+
   <div class="container mt-5">
-    <a href="{{url_for('review_page', title=info[1])}}"><button type="button" name="button" class="btn review-btn ml-3">Write a review</button></a>
+
+    <a href="{{url_for('review_page', title=book_info['title'])}}"><button type="button" name="button" class="btn review-btn ml-3">Write a review</button></a>
+
   </div>
+
   <div class="container mt-5">
+
     {% for elem in review %}
+
       <div class="user_review">
+
         <img src="{{url_for('static', filename='Images/profile.png')}}" width="40" height="40" id="profile-img">
-        <span class="user_name">{{ elem[2] }}</span> rated it
-        {% for i in range(elem[1]) %}
+
+        <span class="user_name">{{ elem["username"] }}</span> rated it
+        {% for i in range(elem["rating"]) %}
           <span class="fa fa-star checked"></span>
         {% endfor %}
-        {% for i in range(5 - elem[1]) %}
+        {% for i in range(5 - elem["rating"]) %}
           <span class="fa fa-star"></span>
         {% endfor %}
+
         <br>
         <br>
-        <pre class="m-0 review_text">{{elem[0]}}</pre>
+
+        <pre class="m-0 review_text">{{elem["review_text"]}}</pre>
+
       </div>
+
     {% endfor %}
+
   </div>
+
 {% endblock %}

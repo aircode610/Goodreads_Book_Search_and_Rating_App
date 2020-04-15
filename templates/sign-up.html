@@ -1,34 +1,59 @@
 {% extends "sign-in-layout.html" %}
 
+
 {% block title %}
+
   Log in
+
 {% endblock %}
+
 
 {% block head %}
+
   <h4 style="font-weight: bold;" class="mb-3 d-block">Create your account</h4>
+
 {% endblock %}
+
 
 {% block form %}
+
   <form class="m-5" action="{{url_for('submit')}}" method="post">
+
 {% endblock %}
 
+
 {% block main_body %}
-  <div class="form-group man-input-group">
-    <label for="username" class="m-0 man-label">Username</label>
-    <input type="" class="man-input d-block" name="username" id="username" placeholder="">
-  </div>
-  <div class="form-group man-input-group">
-    <label for="password" class="m-0 man-label">Password</label>
-    <input type="password" class="man-input d-block" id="" name="password" placeholder="">
-  </div>
-  <div class="form-group man-input-group">
-    <label for="email" class="m-0 man-label">Confirm password</label>
-    <input type="password" class="man-input d-block" name="confirm" id="" placeholder="">
-  </div>
-  <button class="btn submit-btn" type="submit">Sign up</button>
+
+    <div class="form-group man-input-group">
+
+      <label for="username" class="m-0 man-label">Username</label>
+      <input type="" class="man-input d-block" name="username" id="username" placeholder="">
+
+    </div>
+
+    <div class="form-group man-input-group">
+
+      <label for="password" class="m-0 man-label">Password</label>
+      <input type="password" class="man-input d-block" id="" name="password" placeholder="">
+
+    </div>
+
+    <div class="form-group man-input-group">
+
+      <label for="email" class="m-0 man-label">Confirm password</label>
+      <input type="password" class="man-input d-block" name="confirm" id="" placeholder="">
+
+    </div>
+
+    <button class="btn submit-btn" type="submit">Sign up</button>
+
   </form>
+
   <div class="m-5">
-  Already have an account?
-  <a href="{{url_for('login')}}">Log in</a>
+
+    Already have an account?
+    <a href="{{url_for('login')}}">Log in</a>
+
   </div>
+
 {% endblock %}
