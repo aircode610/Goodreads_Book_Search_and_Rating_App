@@ -64,7 +64,7 @@ def submit():
             return render_template("sign-up.html", message="This username has already been taken!")
 
     if password == confirm:
-        db.execute("INSERT INTO users (username, password) VALUES (:username, :password)",{"username": username, "password": password})
+        db.execute("INSERT INTO users (username, password) VALUES (:username, :password)", {"username": username, "password": password})
         db.commit()
         id = db.execute("SELECT id FROM users WHERE username = :username", {"username" : username}).fetchone()
         session["user_id"] = id
@@ -164,23 +164,24 @@ def review(t):
     book_info = db.execute("SELECT id, isbn, title, author, year FROM books WHERE title = :title", {"title": t}).fetchone()
 
     if rating == None or review == "":
-        return render_template("review.html",t=t, a=info[2], message="You have to fill all of the inputs")
+        return render_template("review.html",t=t, a=book_info["author"], message="You have to fill all of the inputs")
 
-    review_check = db.execute("SELECT * FROM reviews JOIN users ON reviews.user_id = users.id WHERE user_id = :user_id AND book_id = :book_id", {"user_id" : user_id, "book_id" : book_id}).fetchone()
+    review_check = db.execute("SELECT * FROM reviews JOIN users ON reviews.user_id = users.id WHERE user_id = :user_id AND book_id = :book_id", {"user_id" : user_id, "book_id" : book_info["id"]}).fetchone()
     if review_check == None:
-        db.execute("INSERT INTO reviews (user_id, book_id, review_text, rating) VALUES (:user_id, :book_id, :review_text, :rating)",{"user_id": user_id, "book_id": book_id, "review_text": review, "rating": rating})
+        db.execute("INSERT INTO reviews (user_id, book_id, review_text, rating) VALUES (:user_id, :book_id, :review_text, :rating)",{"user_id": user_id, "book_id": book_info["id"], "review_text": review, "rating": rating})
+        db.commit()
     else:
-        return render_template("review.html",t=t, a=info[2], message="You've posted another review")
+        return render_template("review.html",t=t, a=book_info["author"], message="You've posted another review")
 
-    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "GhLOXmdJzO0kf2gDtsXg", "isbns": isbn})
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "GhLOXmdJzO0kf2gDtsXg", "isbns": book_info["isbn"]})
     ai = res.json()["books"][0]
     rating = ai["average_rating"]
     rating_count = ai["work_ratings_count"]
     rating_info = {}
     rating_info["rating"] = float(rating)
     rating_info["rating_count"] = rating_count
-    rating_info["ratin_trunc"] = math.trunc(float(rating))
+    rating_info["rating_trunc"] = math.trunc(float(rating))
 
-    review_info = db.execute("SELECT review_text, rating, username FROM reviews JOIN users ON reviews.user_id = users.id WHERE reviews.book_id = :id", {"id": id}).fetchall()
+    review_info = db.execute("SELECT review_text, rating, username FROM reviews JOIN users ON reviews.user_id = users.id WHERE reviews.book_id = :id", {"id": book_info["id"]}).fetchall()
 
-    return render_template("book.html", info=info, review=review_info, rating_info=rating_info)
+    return render_template("book.html", book_info=book_info, review=review_info, rating_info=rating_info)
