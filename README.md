@@ -1,3 +1,104 @@
-# Goodreads Book Search and Rating App
 
-First of all I added another requirement in requirments.txt but I think you have it installed on your computer it is requests library. If you want to run the application you can easily run "run.sh" file in your git, all of the environment variables are set in this file. The static folder contains two folders named "Images" and "Styles". As you might guess from the names Images folder contains some images that are used inside the application and Styles folder contains my sass and css file that I have used for styling. There's another folder named templates that contains all of my html files. book.html is the page that the user can see the details about a book. home.html is the page that user sees when he/she is logged in and it is the page that the user can search books in it. index.html is the page that user sees when he/she is visiting the site for the first time or they aren't logged in. layout.html is a default layout for my html files that my html files such as book.html, home.html, index.html and review.html inherit from. log-in.html is the login page where the user can log in. sign-up.html is the page that the user can sign up. review.html is the page that user can write a review about a book. sign-in-layout.html is a default layout for my sign in and log in page that they inherit from. application.py is my main flask file that contains all of the functions for my application and at last the import.py is the program for importing book.csv file to my database.
+# 📚 Goodreads Book Search and Rating App
+
+A **Flask-based web application** that allows users to **search for books using the Goodreads API**, view details, and submit their own ratings. The project includes **user authentication**, **database integration**, and an **API for fetching book data**.
+
+## 🚀 Features
+
+✅ **Search Books** – Find books by title, author, or ISBN using the Goodreads API  
+✅ **View Book Details** – Get information like title, author, year, and average rating  
+✅ **User Authentication** – Secure **registration and login system** using hashed passwords  
+✅ **Submit Ratings** – Users can rate and review books  
+✅ **API Support** – Retrieve book details and user ratings through a RESTful API  
+✅ **Database Integration** – Uses **PostgreSQL** with SQLAlchemy
+
+## 🛠️ Technologies Used
+
+- **Backend:** Flask, SQLAlchemy  
+- **Database:** PostgreSQL  
+- **Frontend:** HTML, CSS, Bootstrap  
+- **API:** Goodreads API
+
+## 📂 Project Structure
+
+```
+📁 Goodreads_Book_Search_and_Rating_App  
+│── 📂 static/            # CSS, JS, images  
+│── 📂 templates/         # HTML templates  
+│── 📂 models/            # Database models  
+│── 📜 app.py             # Main Flask application  
+│── 📜 config.py          # Configuration settings  
+│── 📜 requirements.txt   # Dependencies  
+│── 📜 README.md          # Project documentation  
+│── 📜 .env               # API keys (not included in repo)  
+```
+
+## 🛠️ Installation & Setup
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/aircode610/Goodreads_Book_Search_and_Rating_App.git
+cd Goodreads_Book_Search_and_Rating_App
+```
+
+### 2️⃣ Create a Virtual Environment & Install Dependencies
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### 3️⃣ Set Up Environment Variables
+Create a `.env` file in the root directory and add:
+```
+DATABASE_URL=your_postgresql_database_url
+GOODREADS_API_KEY=your_goodreads_api_key
+SECRET_KEY=your_secret_key
+```
+
+### 4️⃣ Initialize the Database
+```bash
+flask db upgrade
+```
+
+### 5️⃣ Run the Application
+```bash
+flask run
+```
+Visit **http://127.0.0.1:5000/** in your browser.
+
+## 📡 API Endpoints
+
+### 1️⃣ **Get Book Details**
+**Endpoint:**
+```
+GET /api/book/<isbn>
+```
+**Response:**
+```json
+{
+  "title": "Book Title",
+  "author": "Author Name",
+  "year": 2020,
+  "isbn": "1234567890",
+  "average_rating": 4.2
+}
+```
+
+### 2️⃣ **Submit a Rating**
+**Endpoint:**
+```
+POST /api/rate
+```
+**Request Body:**
+```json
+{
+  "isbn": "1234567890",
+  "rating": 5,
+  "review": "Amazing book!"
+}
+```
+
+## 🎥 Watch the YouTube Video for a Demo
+You can watch the video walkthrough of this project on YouTube:  
+[Goodreads Book Search and Rating App Demo](https://youtu.be/nkqNIf7mPs4)
